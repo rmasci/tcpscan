@@ -87,7 +87,6 @@ NOTE: If you see ICMP 'Failed' and this message:
 Move tcpscan to /usr/local/bin and run this command:
   sudo chown root:root /usr/local/bin/tcpscan
   sudo chmod 4755 /usr/local/bin/tcpscan
-This will put a suid on tcpscan, and it runs as root, but ping is also suid to root.
 
 About:
 ------
