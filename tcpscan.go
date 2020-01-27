@@ -808,10 +808,7 @@ This will put a suid on tcpscan, and it runs as root, but ping is also suid to r
 
 About:
 ------
-Version v1.8.5 -- August 20, 2019
-This program is AT&T Written and the source code can be found at:
-	https://codecloud.web.att.com/projects/ST_ESAS/repos/tcpscan/browse
-Documentation:
-	https://wiki.web.att.com/display/CCU/TCPScan
+Version v1.8.5 -- January 27, 2020
+
 `)
 }

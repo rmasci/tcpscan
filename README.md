@@ -77,7 +77,10 @@ C:\tcpscan\binaries\win64>tcpscan wiki.web.att.com -p 443 -d -s -i -t 30ms
 ## Installing
 Tcpscan comes as a single binary, and all you have to do is copy it. Go to the binaries directory and just copy the binary to your system. Be sure to set it as executable on Linux / Mac systems.
 
+You can also just install the binary for your system instead of downloading the whole repository. See the binaries directory in this repository.
+
 ## Usage
+See [extended](https://github.com/rmasci/tcpscanusage.md) usage.
 
 Usage is pretty simple:
 ```
