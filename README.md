@@ -82,13 +82,10 @@ You can also just install the binary for your system instead of downloading the 
 ## Usage
 See [extended](https://github.com/rmasci/tcpscan/blob/master/usage.md) usage.
 
-Usage is pretty simple:
+Usage is pretty simple, by default port 22 is used if no port specified.  Ports can be guessed using a string like this:  ntp://10.1.1.1. More on that below.
 
 NOTE: Tcpscan was compiled with a default timeout of 500ms. Please use the -t option to up the timeout when scanning hosts that might be open to the port, but are latent
 tcpscan <hostname> -p <port>
-```
-ex output:
----
 
 ```
 ] $ tcpscan someserver.mydomain.com -p 22,443
