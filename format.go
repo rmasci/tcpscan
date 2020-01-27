@@ -26,8 +26,8 @@ import (
 	"strings"
 	"time"
 
-	"codecloud.web.att.com/st_cloudutils/gotabulate"
 	"github.com/360EntSecGroup-Skylar/excelize"
+	"github.com/rmasci/gotabulate"
 )
 
 func gridout(render string, lines []string, stats bool) string {

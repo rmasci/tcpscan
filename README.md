@@ -66,11 +66,11 @@ You can scan more than one host by passing a file as a parameter, or by scanning
 
 Binaries can be found under the sdn-tools/tcpscan directory. Yes there is a windows version and Yes it doesn't require Administrator rights to install. Just copy it, and run!
 ```
-C:\tcpscan\binaries\win64>tcpscan wiki.web.att.com -p 443 -d -s -i -t 30ms
+C:\tcpscan\binaries\win64>tcpscan www.google.com -p 443 -d -s -i -t 30ms
 +--------------------+---------+-----------+------------+------------+-------------+-----------------+
 |            Address |    Port |    Status |        TCP |       ICMP |    NSLookup |             SSL |
 +====================+=========+===========+============+============+=============+=================+
-|    135.161.210.251 |     443 |      Open |   179.53ms |   184.72ms |    191.92ms |    OK: 235 days |
+|    www.google.com  |     443 |      Open |   179.53ms |   184.72ms |    191.92ms |    OK: 235 days |
 +--------------------+---------+-----------+------------+------------+-------------+-----------------+
 ```
 
@@ -83,7 +83,8 @@ You can also just install the binary for your system instead of downloading the 
 See [extended](https://github.com/rmasci/tcpscan/blob/master/usage.md) usage.
 
 Usage is pretty simple:
-```
+
+NOTE: Tcpscan was compiled with a default timeout of 500ms. Please use the -t option to up the timeout when scanning hosts that might be open to the port, but are latent
 tcpscan <hostname> -p <port>
 ```
 ex output:
