@@ -22,7 +22,11 @@ Table of Contents
          * [Tab based Grid](#tab-based-grid)
          * [Text only option](#text-only-option)
 
-Most other tools like nc or nmap are tools that are a swiss army knife of things you can do -- some of which can be used for purposes that can harm a system or be used to hack a system.  NetCat is a wonderful tool, and it does a lot more than tcpscan is designed to do -- some of those 'features' can be used to exploit your system, after all NetCat was was originally written to be a hacking tool. NMap can also be used to exploit -- for the most part tcpscan is written to be a tool that is used to verify what you already know should exist, not as a discovery tool to reveal what exploits exist. Having NMap or NetCat on your system is like leaving a set of lockpicks outside the door of your home.  Tcpscan is written in Go, and takes advantage of Go's threading and as a result runs a lot faster than nc or nmap. You'll also find the command syntax is easy to use. 
+Most other tools like nc or nmap are tools that are a swiss army knife of things you can do -- some of which can be used for purposes that can harm a system or be used to hack a system.  
+
+NetCat is a wonderful tool, and it does a lot more than tcpscan is designed to do; however some of those 'features' can be used to exploit your system, after all NetCat was was originally written to be a hacking tool.  Having NMap or NetCat on your system is like leaving a set of lockpicks outside the door of your home. Not saying tcpscan can't be used for hacking, just isn't as good -- it's main purpose is to validate or verify a known host has a port that's open. 
+
+For the most part tcpscan is written to be a tool that is used to verify what you already know should exist, not as a discovery tool to reveal what exploits exist.  Tcpscan is written in Go, and originally was written as an example in using go routines  so it takes advantage of Go's threading. As a result tcpscan runs a faster than nc or nmap, buy you'd have to be scanning an entire subnet to see that.  The syntax is also designed to be easy to use. 
 
 Tcpscan:
 * Scan Hosts / Subnets
@@ -285,6 +289,7 @@ Address,Port,Status,Time
 192.168.2.145,22,Filtered,504.68ms
 ```
 ### Excel output
+Why have an excel option? Because the guy that wrote this package for Go did such an awesome job it was simple to add in. 
 ```
 ] $ tcpscan -e ExcelReport.xlsx -f LongListOfHosts.txt
 Wrote 45 rows to ExcelReport.xlsx
