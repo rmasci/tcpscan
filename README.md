@@ -306,7 +306,10 @@ To: OperationsManager
 CC: OperationsSVP
 Subj: Connectivity in Prod
 
-Attached you'll find a report showing the TCP connectivity that our production systems require. You'll see the systems and the ports as well as showing if those ports are open from our Production systems.
+Attached you'll find a report showing the TCP connectivity 
+that our production systems require. You'll see the systems
+and the ports as well as showing if those ports are open 
+from our Production systems.
 ```
 ```
 ] $ tcpscan -e ExcelReport.xlsx -f LongListOfHosts.txt
