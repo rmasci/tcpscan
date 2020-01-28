@@ -267,7 +267,7 @@ Using a -o will limit the output to only open.
 Scanned 16 hosts/ports in 62.73ms
 ```
 ## Format Output
-You have a few options of how the output is rendered by passing a -F.
+You have a few options of how the output is rendered by passing a -O.  Most of these you don't really need but since the GoTabulate package has them built in -- using them was easy so, why not right?
 
 ### Text Grid (Default) 
 The default output is gridt (grid text -- looks like mysql query)
