@@ -21,6 +21,12 @@ Table of Contents
          * [Graphical Grid](#graphical-grid)
          * [Tab based Grid](#tab-based-grid)
          * [Text only option](#text-only-option)
+   * [Credits](#Credits)
+      * [Excelize](https://github.com/360EntSecGroup-Skylar/excelize)
+      * [GoTabulate](https://github.com/bndr/gotabulate)
+      * [Tcp-Shaker](https://github.com/tevino/tcp-shaker)
+      * [IPSubnet](https://github.com/brotherpowers/ipsubnet)
+      *  [PFlag](github.com/spf13/pflag)
 
 Most other tools like nc or nmap are tools that are a swiss army knife of things you can do -- some of which can be used for purposes that can harm a system or be used to hack a system.  
 
@@ -353,8 +359,8 @@ Formats it as just plain text to which you can grep, awk, sed etc. over.
 # Credits
 Tcpscan would not be possible without thanks to the Go Authors and to the following packages:
 
-	"github.com/360EntSecGroup-Skylar/excelize"
-	"github.com/rmasci/gotabulate"
-	"github.com/tevino/tcp-shaker"
-	"github.com/brotherpowers/ipsubnet"
-   "github.com/spf13/pflag"
+* [Excelize](https://github.com/360EntSecGroup-Skylar/excelize)
+* [GoTabulate](https://github.com/bndr/gotabulate)
+* [Tcp-Shaker](https://github.com/tevino/tcp-shaker)
+* [IPSubnet](https://github.com/brotherpowers/ipsubnet)
+*  [PFlag](github.com/spf13/pflag)
