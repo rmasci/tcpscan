@@ -26,7 +26,7 @@ Table of Contents
       * [GoTabulate](https://github.com/bndr/gotabulate)
       * [Tcp-Shaker](https://github.com/tevino/tcp-shaker)
       * [IPSubnet](https://github.com/brotherpowers/ipsubnet)
-      *  [PFlag](github.com/spf13/pflag)
+      *  [PFlag](https://github.com/spf13/pflag)
 
 Most other tools like nc or nmap are tools that are a swiss army knife of things you can do -- some of which can be used for purposes that can harm a system or be used to hack a system.  
 
@@ -363,4 +363,4 @@ Tcpscan would not be possible without thanks to the Go Authors and to the follow
 * [GoTabulate](https://github.com/bndr/gotabulate)
 * [Tcp-Shaker](https://github.com/tevino/tcp-shaker)
 * [IPSubnet](https://github.com/brotherpowers/ipsubnet)
-*  [PFlag](github.com/spf13/pflag)
+*  [PFlag](https://github.com/spf13/pflag)
