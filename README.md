@@ -28,6 +28,7 @@ NetCat is a wonderful tool, and it does a lot more than tcpscan is designed to d
 
 For the most part tcpscan is written to be a tool that is used to verify what you already know should exist, not as a discovery tool to reveal what exploits exist.  Tcpscan is written in Go, and originally was written as an example in using go routines  so it takes advantage of Go's threading. As a result tcpscan runs a faster than nc or nmap, buy you'd have to be scanning an entire subnet to see that.  The syntax is also designed to be easy to use. 
 
+
 Tcpscan:
 * Scan Hosts / Subnets
 * Pass file for input / file list can be piped in: 
@@ -151,19 +152,20 @@ would count as 4.
 |     192.168.2.149 |    8443 |    Filtered |    501.03ms |
 |     192.168.2.150 |      22 |    Filtered |    500.27ms |
 |     192.168.2.150 |    8443 |    Filtered |    501.22ms |
-+-------------------+---------+-------------+-------------+
-
++------```-------------+---------+-------------+-------------+
+```
 ### Scan from a file
 File contains one <IP>:<Port> per line:
 
-ex test.txt:
+File test.txt:
+```
 192.168.2.145
 192.168.2.146
 192.168.2.147
 192.168.2.148
 192.168.2.149
 192.168.2.150
-
+```
 ```
 ] $ tcpscan -f test.txt
 +-------------------+---------+-------------+-------------+
@@ -177,7 +179,7 @@ ex test.txt:
 |     192.168.2.150 |      22 |    Filtered |    503.88ms |
 +-------------------+---------+-------------+-------------+
 ```
-```
+
 ### Include Ping
 Use -i (ICMP) to use system ping
 
@@ -289,14 +291,25 @@ Address,Port,Status,Time
 192.168.2.145,22,Filtered,504.68ms
 ```
 ### Excel output
-Why have an excel option? Because the guy that wrote this package for Go did such an awesome job it was simple to add in. 
+Why have an excel option? Because the person that wrote this package for Go did such an awesome job it was simple to add in. So if it's simple, why not right?
+"github.com/360EntSecGroup-Skylar/excelize"
+Plus if you want a report to send on to others -- well this gets you started. 
+```
+From: OperationsTeam
+To: OperationsManager
+CC: OperationsSVP
+Subj: Connectivity in Prod
+
+Attached you'll find a report showing the TCP connectivity that our production systems require. You'll see the systems and the ports as well as showing if those ports are open from our Production systems.
+```
 ```
 ] $ tcpscan -e ExcelReport.xlsx -f LongListOfHosts.txt
 Wrote 45 rows to ExcelReport.xlsx
 ] $
 ```
 ### Graphical Grid
-Cooler looking spreadsheet like output.
+Cooler looking spreadsheet like output.  Why did I include this? Because GoTabulate is such and awesome package. I added some changes to it to suite my purposes -- which means gotabulate was well written and easy to understand for others to quickly adapt. Awesome Job
+https://github.com/bndr/gotabulate
 ```
 ] $ tcpscan -f test.txt -O grid
 ╒═══════════════════╤═════════╤═════════════╤═════════════╕
@@ -312,6 +325,7 @@ Cooler looking spreadsheet like output.
 ```
 ### Tab based Grid
 Useful when you want to pipe the results to another program such as Grep or Awk. Better yet use the -O text option for scripting.
+(Again this is just simple with Gotabulate)
 ```
 ] $ tcpscan -f test.txt -F tab
 
@@ -335,3 +349,12 @@ Leaves out the header "Address, Port, Status, TCP"
 72.30.35.9 80 Open 80.61ms
 ```
 Formats it as just plain text to which you can grep, awk, sed etc. over.
+
+# Credits
+Tcpscan would not be possible without thanks to the Go Authors and to the following packages:
+
+	"github.com/360EntSecGroup-Skylar/excelize"
+	"github.com/rmasci/gotabulate"
+	"github.com/tevino/tcp-shaker"
+	"github.com/brotherpowers/ipsubnet"
+   "github.com/spf13/pflag"
