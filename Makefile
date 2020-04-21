@@ -7,27 +7,20 @@ linux32: tcpscan.go digicert.go format.go setFilesLinux.go
 	
 	GOOS=linux GOARCH=386  go build $(compilerFlag)  -o binaries/linux32/tcpscan $(goFilesU)
 	cksum binaries/linux32/tcpscan > binaries/linux32/tcpscan.cksum
-	cp binaries/linux32/tcpscan* ../sdn-tools/tcpscan/linux32/
-
 linux64: $(goFilesU)
 	GOOS=linux GOARCH=amd64  go build $(compilerFlag)  -o binaries/linux64/tcpscan $(goFilesU)
 	cksum binaries/linux64/tcpscan > binaries/linux64/tcpscan.cksum
-	cp binaries/linux64/tcpscan* ../sdn-tools/tcpscan/linux64/
-	cp binaries/linux64/tcpscan ../sdn-tools/tcpscan/tcpscan
 mac: $(goFilesU)
 	GOOS=darwin GOARCH=amd64  go build $(compilerFlag) -o binaries/mac/tcpscan $(goFilesU)
 	cksum binaries/mac/tcpscan > binaries/mac/tcpscan.cksum
-	cp binaries/mac/tcpscan* ../sdn-tools/tcpscan/mac/
 
 win64: $(goFilesW)
 	GOOS=windows GOARCH=amd64  go build $(compilerFlag)  -o binaries/win64/tcpscan.exe $(goFilesW)
 	cksum binaries/win64/tcpscan.exe > binaries/win64/tcpscan.exe.cksum
-	cp binaries/win64/tcpscan* ../sdn-tools/tcpscan/win64/
 
 win32: $(goFilesW)
 	GOOS=windows GOARCH=386  go build $(compilerFlag)  -o binaries/win32/tcpscan.exe $(goFilesW)
 	cksum binaries/win32/tcpscan.exe > binaries/win32/tcpscan.exe.cksum
-	cp binaries/win32/tcpscan* ../sdn-tools/tcpscan/win32/
 	
 pi: $(goFilesU)
 	GOOS=linux GOARCH=arm GOARM=6 go build $(compilerFlag)  -o binaries/pi/tcpscan $(goFilesU)
