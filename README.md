@@ -32,8 +32,7 @@ Most other tools like nc or nmap are tools that are a swiss army knife of things
 
 NetCat is a wonderful tool, and it does a lot more than tcpscan is designed to do; however some of those 'features' can be used to exploit your system, after all NetCat was was originally written to be a hacking tool.  Having NMap or NetCat on your system is like leaving a set of lockpicks outside the door of your home. Not saying tcpscan can't be used for hacking, just isn't as good -- it's main purpose is to validate or verify a known host has a port that's open. 
 
-For the most part tcpscan is written to be a tool that is used to verify what you already know should exist, not as a discovery tool to reveal what exploits exist.  Tcpscan is written in Go, and originally was written as an example in using go routines  so it takes advantage of Go's threading. As a result tcpscan runs a faster than nc or nmap, buy you'd have to be scanning an entire subnet to see that.  The syntax is also designed to be easy to use. 
-
+For the most part tcpscan is written to be a tool that is used to verify what you already know should exist, not as a discovery tool to reveal what exploits exist.  Tcpscan is written in Go, and originally was written as an example in using go routines  so it takes advantage of Go's threading. As a result tcpscan runs a faster than nc or nmap. The syntax is also designed to be easy to use. Can output in Grid (Mysql like), CSV, plain text and even generate an Excel report.
 
 Tcpscan:
 * Scan Hosts / Subnets
@@ -106,6 +105,35 @@ tcpscan <hostname> -p <port>
 |  somesevrer.mydomain.com |      22 |    Closed |    79.96ms |
 |  someserver.mydomain.com |     443 |      Open |    79.08ms |
 +--------------------------+---------+-----------+------------+
+```
+
+### Scriptable 
+Using the -O text or -O tab allows you to pipe output into programs like awk.
+```
+$ tcpscan 10.1.1.205 -p 22  -O text -i | awk '{print "Server is",$3,"Ping time",$5}'
+Server is Open Ping time 13.99ms
+```
+
+Tcpscan also allows piped input
+```
+cat hostlist
+10.100.0.24:8080
+10.100.0.26:80
+10.100.0.115:22
+10.100.0.116:3389
+10.100.0.117:443
+```
+```
+] $ cat hostslist | tcpscan -p 80
++-----------------------+---------+-------------+-------------+
+|          Address      |    Port |      Status |         TCP |
++=======================+=========+=============+=============+
+|    10.100.0.24:8080   |    8080 |        Open |     86.82ms |
+|    10.100.0.26:80     |      80 |        Open |     88.42ms |
+|    10.100.0.115:22    |      22 |        Open |     88.60ms |
+|    10.100.0.116:3389  |    3389 |    Filtered |    502.41ms |
+|    10.100.0.117:443   |     443 |        Open |     80.32ms |
++------------------+---------+-------------+------------------+
 ```
 ### What if I don't know the port?
 Tcp scan can try to guess the port you're looking for, just put the name of the service (/etc/services) in front of the host:
