@@ -5,6 +5,7 @@ Table of Contents
    * [TCPSCAN](#tcpscan)
       * [Installing](#installing)
       * [Usage](#usage)
+      * [Scriptable](#Scriptable)
       * [ex output:](#ex-output)
          * [What if I don't know the port?](#what-if-i-dont-know-the-port)
          * [Scan a range of ports](#scan-a-range-of-ports)
@@ -107,7 +108,7 @@ tcpscan <hostname> -p <port>
 +--------------------------+---------+-----------+------------+
 ```
 
-### Scriptable 
+## Scriptable 
 Using the -O text or -O tab allows you to pipe output into programs like awk.
 ```
 $ tcpscan 10.1.1.205 -p 22  -O text -i | awk '{print "Server is",$3,"Ping time",$5}'
