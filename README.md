@@ -4,7 +4,7 @@ Table of Contents
 
    * [TCPSCAN](#tcpscan)
       * [Installing](#installing)
-      **[Releases](#releases)
+         * [Releases](#releases)
       * [Usage](#usage)
       * [Scriptable](#Scriptable)
       * [ex output:](#ex-output)
