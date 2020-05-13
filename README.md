@@ -90,6 +90,10 @@ Tcpscan comes as a single binary, and all you have to do is copy it. Go to the b
 
 You can also just install the binary for your system instead of downloading the whole repository. See the binaries directory in this repository.
 
+### Releases
+Please click on the [Releases](https://github.com/rmasci/tcpscan/releases) tab
+[1.8.5 tcpscan](https://github.com/rmasci/tcpscan/releases) 
+
 ## Usage
 See [extended](https://github.com/rmasci/tcpscan/blob/master/usage.md) usage.
 
