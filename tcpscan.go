@@ -45,7 +45,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/brotherpowers/ipsubnet"
 	flag "github.com/spf13/pflag"
 )
 
@@ -405,40 +404,6 @@ func parseCIDR(ipStr string) (ips []string) {
 	return ips[1:cut]
 }
 
-func subnetCalc(ipStr string) {
-	_, _, err := net.ParseCIDR(ipStr)
-	errorHandle(err, "Parse CIDR", true)
-	ipSub := strings.Split(ipStr, "/")
-	if len(ipSub) <= 1 {
-		os.Exit(1)
-	}
-	var output []string
-	ipSubInt, err := strconv.Atoi(ipSub[1])
-	errorHandle(err, "SubnetCalc", true)
-	sub := ipsubnet.SubnetCalculator(ipSub[0], ipSubInt)
-	//fmt.Printf("Host: %v CIDR: /%v\n\n",ipSub[0], ipSub[1])
-	output = append(output, fmt.Sprintf("Host Address\t\t- %v", sub.GetIPAddress()))
-	output = append(output, fmt.Sprintf("Subnet Mask\t\t- %v", sub.GetSubnetMask()))
-	output = append(output, fmt.Sprintf("Network Address\t\t- %v", sub.GetNetworkPortion()))
-	output = append(output, fmt.Sprintf("Broadcast Address\t- %v", sub.GetBroadcastAddress()))
-	output = append(output, fmt.Sprintf("Network Range\t\t- %v - %v", sub.GetNetworkPortion(), sub.GetBroadcastAddress()))
-	uStartArr := sub.GetNetworkPortionQuards()
-	uFirst3 := fmt.Sprintf("%v.%v.%v", uStartArr[0], uStartArr[1], uStartArr[2])
-	usableStart := fmt.Sprintf("%v.%v", uFirst3, uStartArr[3]+1)
-	//ipEnd := fmt.Sprintf("%v.%v", uFirst3, ipStartArr[3]+sub.GetNumberAddressableHosts())
-	uEndArr := strings.Split(sub.GetBroadcastAddress(), ".")
-	uLastInt, _ := strconv.Atoi(uEndArr[3])
-	usableEnd := fmt.Sprintf("%v.%v.%v.%v", uEndArr[0], uEndArr[1], uEndArr[2], uLastInt-1)
-	output = append(output, fmt.Sprintf("Usable Range\t\t- %v - %v", usableStart, usableEnd))
-	output = append(output, fmt.Sprintf("Addresses in Network\t- %v", sub.GetNumberIPAddresses()))
-	output = append(output, fmt.Sprintf("Usable Addresses\t- %v", sub.GetNumberAddressableHosts()))
-	fmt.Println("")
-	for _, l := range output {
-		fmt.Printf("\t%v\n", l)
-	}
-	fmt.Println("")
-}
-
 func parsePorts(port string) (ports []string) {
 	if port == "nopass" {
 		ports = append(ports, "nopass")
@@ -630,27 +595,6 @@ func nsLookup(host string) (ipAddr, nsDur string) {
 	return ipAddr, nsDur
 }
 
-/*
-func scanIP(target string, timeOut *time.Duration, icmpChan chan<- string) {
-	pingTarget, err := ping.NewPinger(target)
-	errorHandle(err, "New Ping", true)
-	usr, err := user.Current()
-	errorHandle(err, "Get UID", true)
-	if usr.Uid == "0" {
-		pingTarget.SetPrivileged(true)
-	}
-	pingTarget.Count = 1
-	pingTarget.Timeout = *timeOut
-	pingTarget.Run()
-	stat := pingTarget.Statistics()
-	if stat.PacketsSent == stat.PacketsRecv {
-		maxrtt := fmt.Sprintf("%v", formatDuration(stat.MaxRtt))
-		icmpChan <- maxrtt
-	}
-	icmpChan <- "ICMP Fail"
-}
-*/
-
 func scanIPLinux(target string, timeOut *time.Duration, icmpChan chan<- string) {
 	tStart := time.Now()
 	var cmd *exec.Cmd
@@ -816,7 +760,7 @@ Move tcpscan to /usr/local/bin and run this command:
 
 About:
 ------
-Version v1.8.5 -- January 27, 2020
+Version v1.8.10 -- June 29, 2020
 
 `)
 }

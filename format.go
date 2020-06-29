@@ -1,22 +1,3 @@
-/*-
- * ============LICENSE_START=======================================================
- * Author: Richard Masci
- * ================================================================================
- * Copyright (C) 2017 - 2020 AT&T Intellectual Property. All rights reserved.
- * ================================================================================
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- * ============LICENSE_END=========================================================
- */
 package main
 
 import (
@@ -26,18 +7,12 @@ import (
 	"strings"
 	"time"
 
+	"codecloud.web.att.com/st_cloudutils/gotabulate"
 	"github.com/360EntSecGroup-Skylar/excelize"
-	"github.com/rmasci/gotabulate"
 )
 
 func gridout(render string, lines []string, stats bool) string {
 	//sort.Sort(sort.StringSlice(lines))
-	var qout bool
-	if render == "qout" {
-		fmt.Printf("<pre>")
-		render = "gridt"
-		qout = true
-	}
 	var Open, Closed, Filtered int
 	lenLines := len(lines)
 	sortLines := make([]string, lenLines)
@@ -93,10 +68,6 @@ func gridout(render string, lines []string, stats bool) string {
 	if stats {
 		printStats(Open, Closed, Filtered)
 	}
-	if qout {
-		fmt.Printf("</pre>")
-	}
-
 	return ""
 }
 
@@ -169,30 +140,30 @@ func excelout(lines []string, fname string) {
 	xlsx := excelize.NewFile()
 	xlsx.NewSheet("Sheet1")
 	lineNumber := 0
-
+	/// This is each row
 	for _, line := range lines {
 		l := strings.Split(line, ",")
 		if len(l) >= 4 {
 			lineNumber++
+			// each cell in row
 			for i, t := range l[1:] {
+
 				cntn, err := excelize.ColumnNumberToName(i)
 				if err != nil {
 					continue
 				}
-				axis := fmt.Sprintf("%v%v", lineNumber, cntn)
-				ctr := fmt.Sprintf("%s", t)
-				xlsx.SetCellValue("Sheet1", axis, ctr)
+				axis := fmt.Sprintf("%v%v", cntn, lineNumber)
+				xlsx.SetCellValue("Sheet1", axis, t)
 			}
 		}
 	}
 	//fmt.Println("Rows: ",i)
-	xlsx.SaveAs(fname)
+	if err := xlsx.SaveAs(fname); err != nil {
+		fmt.Println(err)
+	}
 	fmt.Printf("Wrote %v rows to %v\n", lineNumber, fname)
 }
 
-func testKomodo() {
-	fmt.Println("Hello world")
-}
 func formatDuration(tSince time.Duration) (tDuration string) {
 	u := tSince.String()
 	vi := fmt.Sprintf("%v", tSince.Nanoseconds())

@@ -1,9 +1,9 @@
 compilerFlag=-gcflags=-trimpath=$(shell pwd) -asmflags=-trimpath=$(shell pwd)
-goFilesU=tcpscan.go digicert.go format.go setFilesLinux.go tcpCheck.go 
-goFilesW=tcpscan.go digicert.go format.go setFilesWindows.go tcpCheckw.go 
+goFilesU=tcpscan.go digicert.go format.go setFilesLinux.go tcpCheck.go subnetcalc.go
+goFilesW=tcpscan.go digicert.go format.go setFilesWindows.go tcpCheckw.go subnetcalc.go
 all: mac pi bsd32 bsd64 linux64 linux32 netbsd32 netbsd64 openbsd32 openbsd64 win32 win64 solaris;
 
-linux32: tcpscan.go digicert.go format.go setFilesLinux.go
+linux32: $(goFilesU)
 	
 	GOOS=linux GOARCH=386  go build $(compilerFlag)  -o binaries/tcpscan-l32 $(goFilesU)
 
