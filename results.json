@@ -1,0 +1,13 @@
+{
+  "Results":
+  [
+    {
+      "Hostname": "One",
+      "Port": "22",
+      "Result": "String",
+      "Dur": "String",
+      "ICMPDur": "JSON",
+      "SSLCk": "String"
+    }
+  ]
+}
