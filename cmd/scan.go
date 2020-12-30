@@ -38,17 +38,7 @@ import (
 )
 
 // scanCmd represents the scan command
-var scanCmd = &cobra.Command{
-	Use:   "scan",
-	Short: "Tcpscan is made for scanning for open / closed / filtered ports.",
-	Long:  usage(),
-	Run: func(cmd *cobra.Command, args []string) {
-		output := StartScan(args)
-		if output != "" {
-			fmt.Println(output)
-		}
-	},
-}
+
 var (
 	v                                tools.Verbose
 	asSrv                            bool
@@ -63,7 +53,7 @@ var (
 	proto                            string
 	nofmt                            bool
 	scanAddr, ipaddr, lines          []string
-	i                                int
+	i, exitstatus                    int
 	scan, port, file                 string
 	timeout, outF, xlOut             string
 	help, stats                      bool
@@ -71,8 +61,22 @@ var (
 	startTime                        time.Time
 )
 
+var scanCmd = &cobra.Command{
+	Use:   "scan",
+	Short: "Tcpscan is made for scanning for open / closed / filtered ports.",
+	Long:  usage(),
+	Run: func(cmd *cobra.Command, args []string) {
+		output := StartScan(args)
+		if output != "" {
+			fmt.Println(output)
+		}
+		os.Exit(exitstatus)
+	},
+}
+
 func init() {
 	rootCmd.AddCommand(scanCmd)
+	exitstatus = 0
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command
@@ -463,6 +467,7 @@ func scanPort(target string, timeOut time.Duration, index int, showOpen, sslChec
 			defer connTCP.Close()
 			status = openPort
 		}
+
 		if errTCP, ok := errTCP.(net.Error); ok && errTCP.Timeout() {
 			status = filterPort
 		}
@@ -508,6 +513,7 @@ func scanPort(target string, timeOut time.Duration, index int, showOpen, sslChec
 		}
 
 	} else if status == closedPort || status == filterPort {
+		exitstatus = 1
 		sslStatus = "Failed -2"
 		if showOpen {
 			results <- ""

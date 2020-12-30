@@ -76,7 +76,6 @@ var serverCmd = &cobra.Command{
 }
 
 func init() {
-
 	rootCmd.AddCommand(serverCmd)
 	// Here you will define your flags and configuration settings.
 	serverCmd.Flags().StringVarP(&srvPort, "port", "p", "8888", "Port to run on.")
