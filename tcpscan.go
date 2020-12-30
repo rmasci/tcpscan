@@ -74,6 +74,7 @@ var (
 	proto                            string
 	nofmt                            bool
 	PBServer                         string
+	exitstatus                       int
 )
 
 func main() {
@@ -87,7 +88,7 @@ func main() {
 		help, stats, calc       bool
 		statComm                string
 	)
-
+	exitstatus = 0
 	results := make(chan string)
 	flag.StringVarP(&port, "port", "p", "noport", "Port to scan")
 	flag.StringVarP(&proto, "protocol", "P", "tcp", "Protocol to use, tcp is default.")
@@ -242,6 +243,7 @@ func main() {
 		tDur := formatDuration(tSince)
 		fmt.Printf("Scanned %v hosts/ports in %s\n", len(scanAddr), tDur)
 	}
+	os.Exit(exitstatus)
 }
 
 func ipList(ipaddr []string, inPort string) (scanAddr []string) {
@@ -547,6 +549,7 @@ func scanPort(target string, timeOut time.Duration, index int, showOpen, sslChec
 			results <- ""
 			return
 		}
+		exitstatus = 1
 	}
 
 	if icmpDur == "" {
