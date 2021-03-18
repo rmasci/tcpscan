@@ -35,7 +35,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/SDNSquare/ipsubnet"
+	"github.com/rmasci/ipsubnet"
 )
 
 func subnetCalc(ipStr string) {
@@ -46,7 +46,7 @@ func subnetCalc(ipStr string) {
 		os.Exit(1)
 	}
 	var output []string
-	ipSubInt, err := strconv.Atoi(ipSub[1])
+	ipSubInt, err := strconv.ParseInt(ipSub[1], 10, 64)
 	errorHandle(err, "SubnetCalc", true)
 	sub := ipsubnet.SubnetCalculator(ipSub[0], ipSubInt)
 	//fmt.Printf("Host: %v CIDR: /%v\n\n",ipSub[0], ipSub[1])
