@@ -35,7 +35,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/brotherpowers/ipsubnet"
+	"github.com/SDNSquare/ipsubnet"
 )
 
 func subnetCalc(ipStr string) {

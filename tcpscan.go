@@ -241,7 +241,7 @@ func main() {
 	if strings.Contains(outF, "grid") {
 		tSince := time.Since(startTime)
 		tDur := formatDuration(tSince)
-		fmt.Printf("Scanned %v hosts/ports in %s\n", len(scanAddr), tDur)
+		fmt.Printf("Scanned %v hosts/ports in %s.\n", len(scanAddr), tDur)
 	}
 	os.Exit(exitstatus)
 }

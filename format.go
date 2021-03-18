@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"codecloud.web.att.com/st_cloudutils/gotabulate"
-	"github.com/360EntSecGroup-Skylar/excelize"
+	"github.com/360EntSecGroup-Skylar/excelize/v2"
 )
 
 func gridout(render string, lines []string, stats bool) string {
