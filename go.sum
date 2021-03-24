@@ -18,8 +18,8 @@ github.com/richardlehane/msoleps v1.0.1 h1:RfrALnSNXzmXLbGct/P2b4xkFz4e8Gmj/0Vj9
 github.com/richardlehane/msoleps v1.0.1/go.mod h1:BWev5JBpU9Ko2WAgmZEuiz4/u3ZYTKbjLycmwiWUfWg=
 github.com/rivo/uniseg v0.1.0 h1:+2KBaVoUmb9XzDsrx/Ct0W/EYOSFf/nWTauy++DprtY=
 github.com/rivo/uniseg v0.1.0/go.mod h1:J6wj4VEh+S6ZtnVlnTBMWIodfgj8LQOQFoIToxlJtxc=
-github.com/rmasci/ipsubnet v0.0.0-20210318190259-dea2c5bee06b h1:0FHsCtptoQlWRInHgxa/5QEAX77jsKSOGKS/sNe/MC0=
-github.com/rmasci/ipsubnet v0.0.0-20210318190259-dea2c5bee06b/go.mod h1:fUOpCOCbeYaIEivmoGvIP9E9zGDgs/jwcJUQVF35DME=
+github.com/rmasci/ipsubnet v0.0.0-20210318194400-8c413a19960d h1:tAeRq8zZiLsBkJexDW8N25yKxgKvSPnNq6t2jsCvenA=
+github.com/rmasci/ipsubnet v0.0.0-20210318194400-8c413a19960d/go.mod h1:fUOpCOCbeYaIEivmoGvIP9E9zGDgs/jwcJUQVF35DME=
 github.com/spf13/pflag v1.0.5 h1:iy+VFUOCP1a+8yFto/drg2CJ5u0yRoB7fZw3DKv/JXA=
 github.com/spf13/pflag v1.0.5/go.mod h1:McXfInJRrz4CZXVZOBLb0bTZqETkiAhM9Iw0y3An2Bg=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=

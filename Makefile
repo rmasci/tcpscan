@@ -7,41 +7,41 @@ goFilesW=tcpscan.go digicert.go format.go setFilesWindows.go tcpCheckw.go subnet
 all: mac pi bsd64 linux64 netbsd64 openbsd64 win64 solaris;
 
 linux32: $(goFilesU)
-	GOOS=linux GOARCH=386  go build $(compilerFlag)  -o binaries/tcpscan-l32 $(goFilesU)
+	GOOS=linux GOARCH=386  go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-l32 $(goFilesU)
 
 linux64: $(goFilesU)
 
-	GO111MODULE=on GOOS=linux GOARCH=amd64  go build $(compilerFlag)  -o binaries/tcpscan-l64 $(goFilesU)
+	GO111MODULE=on GOOS=linux GOARCH=amd64  go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-l64 $(goFilesU)
 
 mac: $(goFilesU)
-	GO111MODULE=on GOOS=darwin GOARCH=amd64  go build $(compilerFlag) -o binaries/tcpscan-mac $(goFilesU)
+	GO111MODULE=on GOOS=darwin GOARCH=amd64  go build $(compilerFlag) -o ../tcpscan-release/tcpscan-mac $(goFilesU)
 
 win64: $(goFilesW)
-	GO111MODULE=on GOOS=windows GOARCH=amd64  go build $(compilerFlag)  -o binaries/tcpscan-w64.exe $(goFilesW)
+	GO111MODULE=on GOOS=windows GOARCH=amd64  go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-w64.exe $(goFilesW)
 
 win32: $(goFilesW)
-	GOOS=windows GOARCH=386  go build $(compilerFlag)  -o binaries/tcpscan-w32.exe $(goFilesW)
+	GOOS=windows GOARCH=386  go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-w32.exe $(goFilesW)
 	
 pi: $(goFilesU)
-	GO111MODULE=on GOOS=linux GOARCH=arm GOARM=6 go build $(compilerFlag)  -o binaries/tcpscan-pi $(goFilesU)
+	GO111MODULE=on GOOS=linux GOARCH=arm GOARM=6 go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-pi $(goFilesU)
 
 bsd32: $(goFilesU)
-	GO111MODULE=on GOOS=linux GOARCH=386  go build $(compilerFlag)  -o binaries/tcpscan-bsd32 $(goFilesU)
+	GO111MODULE=on GOOS=linux GOARCH=386  go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-bsd32 $(goFilesU)
 	
 bsd64: $(goFilesU)
-	GO111MODULE=on GOOS=linux GOARCH=amd64  go build $(compilerFlag)  -o binaries/tcpscan-bsd64 $(goFilesU)
+	GO111MODULE=on GOOS=linux GOARCH=amd64  go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-bsd64 $(goFilesU)
 
 openbsd32: $(goFilesU)
-	GO111MODULE=on GOOS=linux GOARCH=386  go build $(compilerFlag)  -o binaries/tcpscan-ob32 $(goFilesU)
+	GO111MODULE=on GOOS=linux GOARCH=386  go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-ob32 $(goFilesU)
 	
 openbsd64: $(goFilesU)
-	GO111MODULE=on GOOS=linux GOARCH=amd64  go build $(compilerFlag)  -o binaries/tcpscan-ob64 $(goFilesU)
+	GO111MODULE=on GOOS=linux GOARCH=amd64  go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-ob64 $(goFilesU)
 
 netbsd32: $(goFilesU)
-	GO111MODULE=on OOS=linux GOARCH=386  go build $(compilerFlag)  -o binaries/tcpscan-b32 $(goFilesU)
+	GO111MODULE=on OOS=linux GOARCH=386  go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-b32 $(goFilesU)
 	
 netbsd64: $(goFilesU)
-	GO111MODULE=on GOOS=linux GOARCH=amd64  go build $(compilerFlag)  -o binaries/tcpscan-b64 $(goFilesU)
+	GO111MODULE=on GOOS=linux GOARCH=amd64  go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-b64 $(goFilesU)
 
 solaris: $(goFilesU)
-	GO111MODULE=on GOOS=solaris GOARCH=amd64  go build $(compilerFlag)  -o binaries/tcpscan-sol $(goFilesU)
+	GO111MODULE=on GOOS=solaris GOARCH=amd64  go build $(compilerFlag)  -o ../tcpscan-release/tcpscan-sol $(goFilesU)

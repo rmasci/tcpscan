@@ -142,13 +142,18 @@ func excelout(lines []string, fname string) {
 	lineNumber := 0
 	/// This is each row
 	for _, line := range lines {
+		if verb {
+			fmt.Println(line)
+		}
 		l := strings.Split(line, ",")
 		if len(l) >= 4 {
 			lineNumber++
 			// each cell in row
 			for i, t := range l[1:] {
-
-				cntn, err := excelize.ColumnNumberToName(i)
+				if verb {
+					fmt.Println("t:", t)
+				}
+				cntn, err := excelize.ColumnNumberToName(i + 1)
 				if err != nil {
 					continue
 				}

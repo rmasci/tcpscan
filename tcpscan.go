@@ -80,13 +80,13 @@ var (
 func main() {
 	startTime := time.Now()
 	var (
-		scanAddr, ipaddr, lines []string
-		i                       int
-		goRoutine               []int
-		scan, port, file        string
-		timeout, outF, xlOut    string
-		help, stats, calc       bool
-		statComm                string
+		scanAddr, ipaddr, lines  []string
+		i                        int
+		goRoutine                []int
+		scan, port, file         string
+		timeout, outF, xlOut     string
+		help, stats, calc, about bool
+		statComm                 string
 	)
 	exitstatus = 0
 	results := make(chan string)
@@ -98,11 +98,12 @@ func main() {
 	flag.StringVarP(&comment, "comment", "c", "", "Add a comment. Replaces 'Address' in output header of table.")
 	flag.StringVarP(&statComm, "sc", "", "", "Add a comment to the status field. Must be 3 fields comma separated. Default is \"Open,Closed,Filtered\".")
 	flag.BoolVarP(&help, "help", "h", false, "help")
+	flag.BoolVarP(&about, "about", "a", false, "About tcpscan")
 	flag.BoolVarP(&nofmt, "no-format", "x", false, "Do not format time output. Output will be in microseconds.")
 	flag.StringVarP(&xlOut, "excel", "e", "", "Save output in Excel Format.")
 	flag.BoolVarP(&sslCheck, "ssl", "s", false, "Check SSL Cert.")
 	flag.BoolVarP(&dnsCk, "dns", "d", false, "Enable DNS Check")
-	flag.BoolVarP(&icmpCk, "icmp", "i", false, "Enable ICMP Check")
+	flag.BoolVarP(&icmpCk, "icmp", "i", false, "Enable ICMP (Ping) Check")
 	flag.BoolVarP(&calc, "calc", "C", false, "Subnet Calculator.  ex: tcpscan -c 10.1.1.0/24")
 	flag.BoolVarP(&stats, "stats", "S", false, "Print Stats. Usefull when scanning more than one host.")
 	flag.StringVarP(&outF, "output", "O", "gridt", "output: grid, gridt, text, csv, tab")
@@ -110,9 +111,18 @@ func main() {
 	flag.StringVarP(&file, "file", "f", "", "A filename containing a list of IP addresses to scan, separated by newlines.")
 	flag.Parse()
 
+	if about {
+		usage(true)
+		fmt.Print("Press 'Enter' to see usage or ctlr-c")
+		bufio.NewReader(os.Stdin).ReadBytes('\n')
+		flag.PrintDefaults()
+		os.Exit(0)
+	}
 	if help {
 		flag.PrintDefaults()
-		usage()
+		fmt.Println("Press any key for extended useage or ctrl-c")
+		bufio.NewReader(os.Stdin).ReadBytes('\n')
+		usage(false)
 		os.Exit(0)
 	}
 
@@ -696,15 +706,19 @@ func removeDuplicates(scanAddr []string) []string {
 	return result
 }
 
-func usage() {
-	fmt.Println(`
-Tcpscan:
+func usage(about bool) {
+	if about {
+		fmt.Println(`Tcpscan:
 --------
 tcpscan is a tool for checking basic network connectivity. Unlike other tools
 like nmap or nc, tcpscan is not a discovery tool, but a validation  tool.
 When all you need is to find out if a port is open on system, or if there 
 is a firewall in the way.
-
+About:
+------
+Version v1.8.15 -- March 24, 2021`)
+	} else {
+		fmt.Println(`
 Extended Usage Information:
 ---------------------------
 -f, --file:
@@ -740,8 +754,9 @@ Extended Usage Information:
 	Subnet Calculator
 		tcpscan -c 10.1.1.0/24
 		tcpscan --calc=10.1.1.0/24
-
-Status:
+press any key...`)
+		bufio.NewReader(os.Stdin).ReadBytes('\n')
+		fmt.Println(`Status:
 -------
 What the 'Status' means:
 	Open 	 --	TCP Packet reached the system, system is listening on the 
@@ -760,10 +775,6 @@ NOTE: If you see ICMP 'Failed' and this message:
 Move tcpscan to /usr/local/bin and run this command:
   sudo chown root:root /usr/local/bin/tcpscan
   sudo chmod 4755 /usr/local/bin/tcpscan
-
-About:
-------
-Version v1.8.10 -- June 29, 2020
-
 `)
+	}
 }
