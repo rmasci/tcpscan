@@ -113,14 +113,17 @@ func main() {
 
 	if about {
 		usage(true)
-		fmt.Print("Press 'Enter' to see usage or ctlr-c")
+		fmt.Print("Press 'Enter' to see usage or 'ctrl-c' to quit")
 		bufio.NewReader(os.Stdin).ReadBytes('\n')
 		flag.PrintDefaults()
+		fmt.Println("Press 'Enter' to extended usage or 'ctrl-c' to quit")
+		bufio.NewReader(os.Stdin).ReadBytes('\n')
+		usage(false)
 		os.Exit(0)
 	}
 	if help {
 		flag.PrintDefaults()
-		fmt.Println("Press any key for extended useage or ctrl-c")
+		fmt.Println("Press 'Enter' to extended usage or 'ctrl-c' to quit")
 		bufio.NewReader(os.Stdin).ReadBytes('\n')
 		usage(false)
 		os.Exit(0)
@@ -714,6 +717,7 @@ tcpscan is a tool for checking basic network connectivity. Unlike other tools
 like nmap or nc, tcpscan is not a discovery tool, but a validation  tool.
 When all you need is to find out if a port is open on system, or if there 
 is a firewall in the way.
+
 About:
 ------
 Version v1.8.15 -- March 24, 2021`)
@@ -754,7 +758,8 @@ Extended Usage Information:
 	Subnet Calculator
 		tcpscan -c 10.1.1.0/24
 		tcpscan --calc=10.1.1.0/24
-press any key...`)
+
+Press 'Enter' to continue or 'ctrl-c' to quit`)
 		bufio.NewReader(os.Stdin).ReadBytes('\n')
 		fmt.Println(`Status:
 -------
