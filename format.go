@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -22,8 +21,13 @@ func gridout(render string, lines []string, stats bool) string {
 		sortLines[x] = l
 	}
 	var minLength int
-	c1 := []string{comment, "Port", "Status", "TCP"}
-	if icmpCk {
+	var c1 []string
+	if icmpOnly {
+		c1 = []string{comment}
+	} else {
+		c1 = []string{comment, "Port", "Status", "TCP"}
+	}
+	if icmpCk || icmpOnly {
 		c1 = append(c1, "ICMP")
 	}
 	if dnsCk {
@@ -76,7 +80,11 @@ func csvout(lines []string, stats bool, delim string) string {
 	var bOut strings.Builder
 
 	if delim != " " {
-		fmt.Fprintf(&bOut, "%v,Port,Status,SSL,TCP", comment)
+		if icmpOnly {
+			fmt.Fprintf(&bOut, "%v", comment)
+		} else {
+			fmt.Fprintf(&bOut, "%v,Port,Status,SSL,TCP", comment)
+		}
 		if icmpCk {
 			fmt.Fprintf(&bOut, ",ICMP")
 		}
@@ -121,7 +129,12 @@ func excelout(lines []string, fname string) {
 		fmt.Printf("Started Excel out\n")
 	}
 	var c1 []string
-	c1Str := "blank," + comment + ",Port,Status,TCP"
+	var c1Str string
+	if icmpOnly {
+		c1Str = "blank," + comment
+	} else {
+		c1Str = "blank," + comment + ",Port,Status,TCP"
+	}
 	if icmpCk {
 		c1Str = c1Str + ",ICMP"
 	}
@@ -135,7 +148,8 @@ func excelout(lines []string, fname string) {
 	lines = append(c1, lines...)
 	if fname == "" {
 		fmt.Printf("You must pass a file name to store the Excel in.\n")
-		os.Exit(1)
+		curTime := time.Now().Format("20060102-150405")
+		fname = "tcpscan-" + curTime + ".xlsx"
 	}
 	xlsx := excelize.NewFile()
 	xlsx.NewSheet("Sheet1")

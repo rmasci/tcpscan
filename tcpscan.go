@@ -75,6 +75,8 @@ var (
 	nofmt                            bool
 	PBServer                         string
 	exitstatus                       int
+	icmpOnly                         bool
+	showClosed                       bool
 )
 
 func main() {
@@ -96,14 +98,16 @@ func main() {
 	flag.BoolVarP(&verb, "verbose", "v", false, "Verbose")
 	flag.BoolVarP(&debug, "vv", "", false, "Very Verbose")
 	flag.StringVarP(&comment, "comment", "c", "", "Add a comment. Replaces 'Address' in output header of table.")
+	flag.BoolVarP(&showClosed, "showClosed", "x", false, "Show only closed or filtered")
 	flag.StringVarP(&statComm, "sc", "", "", "Add a comment to the status field. Must be 3 fields comma separated. Default is \"Open,Closed,Filtered\".")
 	flag.BoolVarP(&help, "help", "h", false, "help")
 	flag.BoolVarP(&about, "about", "a", false, "About tcpscan")
-	flag.BoolVarP(&nofmt, "no-format", "x", false, "Do not format time output. Output will be in microseconds.")
+	flag.BoolVarP(&nofmt, "no-format", "m", false, "Do not format time output. Output will be in microseconds.")
 	flag.StringVarP(&xlOut, "excel", "e", "", "Save output in Excel Format.")
 	flag.BoolVarP(&sslCheck, "ssl", "s", false, "Check SSL Cert.")
 	flag.BoolVarP(&dnsCk, "dns", "d", false, "Enable DNS Check")
 	flag.BoolVarP(&icmpCk, "icmp", "i", false, "Enable ICMP (Ping) Check")
+	flag.BoolVarP(&icmpOnly, "icmp-only", "I", false, "Enable ONLY ICMP (Ping) Check")
 	flag.BoolVarP(&calc, "calc", "C", false, "Subnet Calculator.  ex: tcpscan -c 10.1.1.0/24")
 	flag.BoolVarP(&stats, "stats", "S", false, "Print Stats. Usefull when scanning more than one host.")
 	flag.StringVarP(&outF, "output", "O", "gridt", "output: grid, gridt, text, csv, tab")
@@ -490,88 +494,98 @@ func scanPort(target string, timeOut time.Duration, index int, showOpen, sslChec
 	if verb {
 		fmt.Printf("HOST: \"%v\", Target: \"%v\", NS: %v\n", host, target, nsDur)
 	}
-	if icmpCk {
+	if icmpCk || icmpOnly {
+		icmpCk = true
 		if runtime.GOOS == "windows" {
 			go scanIPWindows(host, &timeOut, icmpChan)
 		} else {
 			go scanIPLinux(host, &timeOut, icmpChan)
 		}
 	}
-	status = closedPort
-
-	tStart := time.Now()
 	sslStatus := "N/A"
-	var connTCP net.Conn
-	var errTCP error
-	if proto != "tcp" || sslCheck || runtime.GOOS == "windows" {
-		connTCP, errTCP = net.DialTimeout(proto, target, timeOut)
+	if icmpOnly == false {
+		status = closedPort
 
-		if errTCP == nil {
-			defer connTCP.Close()
-			status = openPort
-		}
-		if errTCP, ok := errTCP.(net.Error); ok && errTCP.Timeout() {
-			status = filterPort
-		}
-	} else {
-		status = tcpChecker(target, timeOut)
-	}
-	tSince := time.Since(tStart)
-	if verb || debug {
-		fmt.Printf("%v Status target: %v - %v: %v\n", index, target, status, tSince)
-	}
-	tDur := formatDuration(tSince)
+		tStart := time.Now()
+		var connTCP net.Conn
+		var errTCP error
+		if proto != "tcp" || sslCheck || runtime.GOOS == "windows" {
+			connTCP, errTCP = net.DialTimeout(proto, target, timeOut)
 
-	if status == openPort && sslCheck {
-		sslHost := strings.Split(tTmp[0], ":")[0]
-		// Configure tls to look at domainName
-		config := tls.Config{
-			ServerName:         sslHost,
-			InsecureSkipVerify: false,
-			RootCAs:            rootCAs,
-		}
-		// Connect to tls
-		conn := tls.Client(connTCP, &config)
-		defer conn.Close()
-		// Handshake with TLS to get cert
-		_, hsErr := conn.Read(nil)
-		if hsErr != nil {
-			fmt.Printf("SSL Failed: %v\n", hsErr)
-			sslStatus = fmt.Sprintf("Failed -1")
-		} else {
-			ver := "TLS ?"
-			state := conn.ConnectionState()
-			pc := *state.PeerCertificates[0]
-			daysToExp := ((pc.NotAfter.Unix() - time.Now().Unix()) / 86400)
-			switch pc.Version {
-			case 3:
-				ver = fmt.Sprintf("TLS v1.2")
-			case 2:
-				ver = fmt.Sprintf("TLS v1.1")
-			case 1:
-				ver = fmt.Sprintf("TLS v1.0")
-			case 0:
-				ver = fmt.Sprintf("SSL v3")
+			if errTCP == nil {
+				defer connTCP.Close()
+				status = openPort
 			}
-			sslStatus = fmt.Sprintf("%v / OK: %v days", ver, daysToExp)
+			if errTCP, ok := errTCP.(net.Error); ok && errTCP.Timeout() {
+				status = filterPort
+			}
+		} else {
+			status = tcpChecker(target, timeOut)
+		}
+		tSince := time.Since(tStart)
+		if verb || debug {
+			fmt.Printf("%v Status target: %v - %v: %v\n", index, target, status, tSince)
+		}
+		tDur := formatDuration(tSince)
+
+		if status == openPort && sslCheck {
+			if showClosed {
+				results <- ""
+				return
+			}
+			sslHost := strings.Split(tTmp[0], ":")[0]
+			// Configure tls to look at domainName
+			config := tls.Config{
+				ServerName:         sslHost,
+				InsecureSkipVerify: false,
+				RootCAs:            rootCAs,
+			}
+			// Connect to tls
+			conn := tls.Client(connTCP, &config)
+			defer conn.Close()
+			// Handshake with TLS to get cert
+			_, hsErr := conn.Read(nil)
+			if hsErr != nil {
+				fmt.Printf("SSL Failed: %v\n", hsErr)
+				sslStatus = fmt.Sprintf("Failed -1")
+			} else {
+				ver := "TLS ?"
+				state := conn.ConnectionState()
+				pc := *state.PeerCertificates[0]
+				daysToExp := ((pc.NotAfter.Unix() - time.Now().Unix()) / 86400)
+				switch pc.Version {
+				case 3:
+					ver = fmt.Sprintf("TLS v1.2")
+				case 2:
+					ver = fmt.Sprintf("TLS v1.1")
+				case 1:
+					ver = fmt.Sprintf("TLS v1.0")
+				case 0:
+					ver = fmt.Sprintf("SSL v3")
+				}
+				sslStatus = fmt.Sprintf("%v / OK: %v days", ver, daysToExp)
+			}
+
+		} else if status == closedPort || status == filterPort {
+			sslStatus = "Failed -2"
+			if showOpen {
+				results <- ""
+				return
+			}
+			exitstatus = 1
 		}
 
-	} else if status == closedPort || status == filterPort {
-		sslStatus = "Failed -2"
-		if showOpen {
-			results <- ""
-			return
+		if icmpDur == "" {
+			icmpDur = "0"
 		}
-		exitstatus = 1
+		// print Results
+		host = strings.TrimLeft(host, "[")
+		host = strings.TrimRight(host, "]")
+		result = fmt.Sprintf("%v,%s,%s,%s,%v", index, host, port, status, tDur)
+		// ICMP ONLY.
+	} else {
+		result = fmt.Sprintf("%v,%s", index, host)
 	}
-
-	if icmpDur == "" {
-		icmpDur = "0"
-	}
-	// print Results
-	host = strings.TrimLeft(host, "[")
-	host = strings.TrimRight(host, "]")
-	result = fmt.Sprintf("%v,%s,%s,%s,%v", index, host, port, status, tDur)
 	if verb {
 		//fmt.Printf("Result: %v\n", result)
 	}
