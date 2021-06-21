@@ -13,6 +13,7 @@ Table of Contents
          * [Scan a subnet](#scan-a-subnet)
          * [Scan from a file](#scan-from-a-file)
          * [Include Ping](#include-ping)
+         * [Ping Only](#ping-only)
          * [DNS Lookup of host](#dns-lookup-of-host)
          * [Only Show Open](#only-show-open)
          * [Scan from piped input](#scan-from-piped-input)
@@ -236,7 +237,21 @@ Use -i (ICMP) to use system ping
 |     192.168.2.150 |      22 |    Filtered |    503.88ms |    ICMP Fail |
 +-------------------+---------+-------------+-------------+--------------+
 ```
-
+### Ping Only 
+Use -I (ICMP) to only ping the host. 
+```
+] $ tcpscan -f test.txt -I
++-------------------+--------------+
+|           Address |         ICMP |
++===================+==============+
+|     192.168.2.145 |      97.45ms |
+|     192.168.2.146 |      95.34ms |
+|     192.168.2.147 |     105.05ms |
+|     192.168.2.148 |    ICMP Fail |
+|     192.168.2.149 |     104.24ms |
+|     192.168.2.150 |    ICMP Fail |
++-------------------+--------------+
+```
 ### DNS Lookup of host
 Use a -d to do NSLookups of hosts. (Doesn't do reverse lookups)
 srverlist.txt:
