@@ -243,7 +243,7 @@ func main() {
 	case "grid":
 		_ = gridout("grid", lines, stats)
 	case "gridt":
-		_ = gridout("gridt", lines, stats)
+		_ = gridout("grid", lines, stats)
 	case "tab":
 		_ = gridout("tab", lines, stats)
 	case "csv":

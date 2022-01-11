@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"codecloud.web.att.com/st_cloudutils/gotabulate"
-	"github.com/360EntSecGroup-Skylar/excelize/v2"
+	"github.com/rmasci/gotabulate"
+	"github.com/xuri/excelize/v2"
 )
 
 func gridout(render string, lines []string, stats bool) string {
@@ -62,7 +62,7 @@ func gridout(render string, lines []string, stats bool) string {
 	} else {
 		gridulate := gotabulate.Create(masterStr)
 		gridulate.SetWrapStrings(false)
-		gridulate.SetRemEmptyLines(true)
+		//gridulate.SetRemEmptyLines(true)
 		if PBServer != "" {
 			return fmt.Sprintln(gridulate.Render(render))
 		} else {
