@@ -34,7 +34,7 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net"
 	"net/url"
@@ -160,7 +160,7 @@ func main() {
 		// Look for info coming from STDIN:
 		stat, _ := os.Stdin.Stat()
 		if (stat.Mode()&os.ModeCharDevice) == 0 && len(ipaddr) == 0 {
-			inBytes, _ := ioutil.ReadAll(os.Stdin)
+			inBytes, _ := io.ReadAll(os.Stdin)
 			ipaddr = strings.Fields(string(inBytes))
 		} else if len(ipaddr) == 0 {
 			ipaddr = append(ipaddr, "127.0.0.1")
