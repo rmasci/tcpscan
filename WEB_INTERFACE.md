@@ -166,7 +166,7 @@ Settings are stored in the browser's localStorage and include:
 
 ### macOS (launchd)
 
-Create `~/Library/LaunchAgents/com.rmasci.dvdrip-web.plist`:
+Create `~/Library/LaunchAgents/com.rmasci.rip-web.plist`:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -174,7 +174,7 @@ Create `~/Library/LaunchAgents/com.rmasci.dvdrip-web.plist`:
 <plist version="1.0">
 <dict>
     <key>Label</key>
-    <string>com.rmasci.dvdrip-web</string>
+    <string>com.rmasci.rip-web</string>
     <key>ProgramArguments</key>
     <array>
         <string>/usr/local/bin/rip</string>
@@ -189,21 +189,21 @@ Create `~/Library/LaunchAgents/com.rmasci.dvdrip-web.plist`:
     <key>KeepAlive</key>
     <true/>
     <key>StandardErrorPath</key>
-    <string>/var/log/dvdrip-web.err.log</string>
+    <string>/var/log/rip-web.err.log</string>
     <key>StandardOutPath</key>
-    <string>/var/log/dvdrip-web.out.log</string>
+    <string>/var/log/rip-web.out.log</string>
 </dict>
 </plist>
 ```
 
 Load with:
 ```bash
-launchctl load ~/Library/LaunchAgents/com.rmasci.dvdrip-web.plist
+launchctl load ~/Library/LaunchAgents/com.rmasci.rip-web.plist
 ```
 
 ### Linux (systemd)
 
-Create `/etc/systemd/system/dvdrip-web.service`:
+Create `/etc/systemd/system/rip-web.service`:
 
 ```ini
 [Unit]
@@ -225,8 +225,8 @@ WantedBy=multi-user.target
 Enable and start:
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable dvdrip-web
-sudo systemctl start dvdrip-web
+sudo systemctl enable rip-web
+sudo systemctl start rip-web
 ```
 
 ## Reverse Proxy Setup (nginx)

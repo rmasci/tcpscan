@@ -194,7 +194,7 @@ func runTVMakeMKV(drive, outDir string) error {
 	//   outDir - destination folder for output files
 	//   --minlength=600 - only rip titles longer than 10 minutes
 	return script.Exec(fmt.Sprintf("makemkvcon mkv %s all \"%s\" --minlength=600", drive, outDir)).
-		Spinner("Extracting episodes...", 1).
+		Spinner("Extracting episodes...", 9).
 		Error()
 }
 
@@ -235,7 +235,7 @@ func renameWithFileBot(seasonNum, discNum, outDir string) error {
 	fmt.Printf("FileBot command: %s\n", cmd)
 
 	p := script.Exec(cmd).
-		Spinner("Renaming episodes...", 1)
+		Spinner("Renaming episodes...", 9)
 	output, err := p.String()
 
 	// Always print the output for debugging

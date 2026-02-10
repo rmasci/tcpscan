@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"regexp"
 
 	"github.com/spf13/cobra"
@@ -88,44 +87,4 @@ func extractDevicePath(driveSpec string) string {
 	re := regexp.MustCompile(`\d+`)
 	driveIndex := re.FindString(driveSpec)
 	return fmt.Sprintf("/dev/sr%s", driveIndex)
-}
-
-func renameMKVFile(dir, filename string) error {
-	// Find all MKV files in the directory
-	pattern := filepath.Join(dir, "*.mkv")
-	files, err := filepath.Glob(pattern)
-	if err != nil {
-		return fmt.Errorf("error globbing MKV files: %v", err)
-	}
-
-	// Warn if more than one file found
-	if len(files) > 1 {
-		fmt.Printf("More than one file in the directory, manual rename may be required\n")
-	}
-
-	// If no files found, return error
-	if len(files) == 0 {
-		return fmt.Errorf("no MKV files found in %s", dir)
-	}
-
-	// Loop through files and rename them with sequential numbering
-	for i, filePath := range files {
-		var newName string
-		if i == 0 {
-			// First file gets no number
-			newName = filepath.Join(dir, filename+".mkv")
-		} else {
-			// Rest get sequential numbers
-			newName = filepath.Join(dir, filename+fmt.Sprintf("%d", i)+".mkv")
-		}
-
-		// Rename the file
-		if err := os.Rename(filePath, newName); err != nil {
-			return fmt.Errorf("error renaming %s to %s: %v", filePath, newName, err)
-		}
-
-		fmt.Printf("Renamed: %s -> %s\n", filepath.Base(filePath), filepath.Base(newName))
-	}
-
-	return nil
 }

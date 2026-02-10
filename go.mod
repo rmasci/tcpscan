@@ -1,4 +1,4 @@
-module github.com/rmasci/dvdrip
+module github.com/rmasci/rip
 
 go 1.25.0
 

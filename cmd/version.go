@@ -10,7 +10,7 @@ import (
 // This is injected at build time using ldflags.
 // Example build command:
 //
-//	go build -ldflags "-X github.com/rmasci/dvdrip/cmd.Version=v0.2.0" .
+//	go build -ldflags "-X github.com/rmasci/rip/cmd.Version=v0.2.0" .
 //
 // Format: v0.1.0
 var Version = "v0.1.0"

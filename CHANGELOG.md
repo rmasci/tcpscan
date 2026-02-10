@@ -62,7 +62,7 @@ All notable changes to this project will be documented in this file.
 - Reorganized README structure: moved "Setting Up MergerFS" section after Install section
 - Enhanced `-c, --category` parameter documentation to clarify directory mapping
 - Updated MergerFS section with cross-references to detailed setup instructions
-- Updated repository references from `dvdrip` to `rip` in clone commands
+- Updated repository references from `rip` to `rip` in clone commands
 
 ### Technical
 - Added RELEASE_DIR variable to Makefile for release builds
