@@ -29,6 +29,8 @@ go.work
 *.swo
 *~
 .DS_Store
+.project
+*.komodoproject
 
 # Compiled binary (if built in root)
 tcpscan

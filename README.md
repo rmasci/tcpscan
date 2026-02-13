@@ -357,4 +357,4 @@ See [LICENSE](LICENSE) file for details.
 
 ## Contributing
 
-For technical documentation on building, modernization, and optimizations, see the [cmd/](cmd/) directory.
+For technical documentation on building, modernization, and optimizations, see the [docs/](docs/) directory.
