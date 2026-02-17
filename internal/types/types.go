@@ -30,8 +30,7 @@ type Config struct {
 	ExcelFile    string
 	RootCAs      *x509.CertPool
 	// New features
-	Explain      bool
-	ShowHints    bool
+	Verbosity    int // 0=silent, 1=hints (quick), 2=detailed explanations
 	Samples      int
 	CheckPreset  string
 	StatusLabels StatusLabels
