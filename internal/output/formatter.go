@@ -22,8 +22,10 @@ func New(config *types.Config) *Formatter {
 
 func (f *Formatter) Format(results []*types.ScanResult, format string) (string, error) {
 	switch format {
-	case "grid", "gridt":
+	case "grid":
 		return f.formatGrid(results, "grid"), nil
+	case "gridt":
+		return f.formatGrid(results, "gridt"), nil
 	case "tab":
 		return f.formatGrid(results, "tab"), nil
 	case "csv":
