@@ -22,6 +22,9 @@ vendor/
 # Go workspace file
 go.work
 
+# macOS resource forks
+._*
+
 # IDE and editor files
 .idea/
 .vscode/
