@@ -31,6 +31,8 @@ type Config struct {
 	RootCAs      *x509.CertPool
 	// New features
 	Verbosity    int // 0=silent, 1=hints (quick), 2=detailed explanations
+	ShowHints    bool
+	Explain      bool
 	Samples      int
 	CheckPreset  string
 	StatusLabels StatusLabels
