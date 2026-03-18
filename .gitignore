@@ -15,6 +15,7 @@ coverage.out
 # Build directories
 build/
 release/
+binaries/
 
 # Dependency directories (optional)
 vendor/
